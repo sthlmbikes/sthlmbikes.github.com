@@ -1,1 +1,89 @@
-hello.
+<!doctype>
+<html>
+    <head>
+        <meta charset="utf-8" />
+        <title>Sthlm Bikes</title>
+        <link href="//api.tiles.mapbox.com/mapbox.js/v1.0.2/mapbox.css" rel='stylesheet' />
+        <style>
+            html,
+            body {
+                background: #ccc;
+            }
+            body { margin:0; padding:0; font-size: 100%; font-family: Avenir, sans-serif; text-align: center; }
+
+            a {
+                color: #444;
+            }
+
+            header {
+                background: #232d3b;
+                color: #fff;
+                line-height: 3em;
+            }
+
+            footer {
+                color: #555;
+            }
+
+            h1 {
+                margin: 0;
+                font-size: 1.1em;
+                font-weight: 600;
+                font-style: italic;
+            }
+
+            #map {
+                height: 300px;
+                background: #aaa;
+                border-bottom: 1px solid #999;
+            }
+        </style>
+    </head>
+    <body>
+        <header>
+            <h1>#sthlmbikes</h1>
+        </header>
+        <div id="map"></div>
+        <footer>
+            <p>In App Store soon. Created during <a href="http://sthlmstartuphack.com/">Sthlm Startup Hack</a> 2013</p>
+        </footer>
+
+        <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+        <script src='//api.tiles.mapbox.com/mapbox.js/v1.0.2/mapbox.js'></script>
+        <script>
+            $(function() {
+                console.log('lool');
+
+                var map = L.mapbox.map('map', 'ptz0n.map-o55sn2ut')
+                    .setView([59.3300, 18.0700], 12);
+
+                $.getJSON('http://api.sthlmbikes.se/?lat=59.3300&lng=18.0700&accuracy=1&callback=?', function(data) {
+                    console.log(data);
+                    var geoJson = {
+                        type: 'FeatureCollection',
+                        features: []},
+                        count   = data.length;
+
+                    $.each(data, function(i) {
+                        console.log(i, this);
+
+                        geoJson.features.push({
+                            type: 'Feature',
+                            properties: {
+                                title: this.address+' ('+this.availableBikes+'/'+this.availableLocks+')',
+                                'marker-color': '#232d3b',
+                                'marker-size': 'small'
+                            },
+                            geometry: {
+                                type: 'Point',
+                                coordinates: this.coordinate
+                            }
+                        });
+
+                        if(!--count) map.markerLayer.setGeoJSON(geoJson);
+                    });
+                });
+            });
+        </script>
+    </body>
+</html>
