@@ -45,6 +45,7 @@
         </header>
         <div id="map"></div>
         <footer>
+            <p><strong>Nearest bike or empty lock, that's it.</strong></p>
             <p>In App Store soon. Created during <a href="http://sthlmstartuphack.com/">Sthlm Startup Hack</a> 2013</p>
         </footer>
 
@@ -72,7 +73,8 @@
                             properties: {
                                 title: this.address+' ('+this.availableBikes+'/'+this.availableLocks+')',
                                 'marker-color': '#232d3b',
-                                'marker-size': 'small'
+                                'marker-size': 'small',
+                                'marker-symbol': 'bicycle'
                             },
                             geometry: {
                                 type: 'Point',
