@@ -1,0 +1,12 @@
+url: http://sthlmbikes.se
+title: Sthlm Bikes
+description: Available bikes and free locks near you.
+language: sv-se
+
+permalink: /post/:title.html
+
+future: false
+auto: true
+server: true
+
+exclude: ["README.md", "config.rb"]
